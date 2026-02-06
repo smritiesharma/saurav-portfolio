@@ -38,25 +38,26 @@
         {
             "name": "HR Job Simulation",
             "description": "GE Aerospace simulation applying key HR tools to improve system efficiency.",
-            "emoji": "✈️",
+            "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=400&q=80",
             "tags": ["HR", "Simulation", "Strategy"],
-            "gradient": "linear-gradient(45deg, #ff9a9e, #fad0c4)"
+            "gradient": "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))"
         },
         {
             "name": "Viral Storytelling",
             "description": "Strategic content project surpassing 450K views via algorithm analysis.",
-            "emoji": "📈",
+            "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&q=80",
             "tags": ["Marketing", "Analytics", "Video"],
-            "gradient": "linear-gradient(45deg, #a18cd1, #fbc2eb)"
+            "gradient": "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))"
         },
         {
             "name": "Community Leadership",
-            "description": "Class Representative & Event Head. Managed budgets and coordinated between faculty/students.",
-            "emoji": "🤝",
+            "description": "Class Representative & Event Head. Managed budgets and coordinated teams.",
+            "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=80",
             "tags": ["Leadership", "Management"],
-            "gradient": "linear-gradient(45deg, #84fab0, #8fd3f4)"
+            "gradient": "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))"
         }
     ],
+
     "skills": [
         {
             "category": "Core Competencies",
