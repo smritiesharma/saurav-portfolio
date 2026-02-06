@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saurav Kumar Mishra | 3D Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="loader">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading 3D World...</div>
+    </div>
+
+    <div id="ui-layer">
+        <div id="header">
+            <h1 id="ui-name">Saurav Kumar Mishra</h1>
+            <p id="ui-role">HR Strategy & Talent Acquisition</p>
+        </div>
+
+        <div id="scroll-hint">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <p>SCROLL TO EXPLORE</p>
+        </div>
+
+        <div id="zone-indicator">ZONE: INTRO</div>
+
+        <div id="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+            <div class="dots-container" id="dots-container">
+                </div>
+        </div>
+
+        <div id="content-panel" class="panel hidden">
+            <div class="panel-content">
+                </div>
+        </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
