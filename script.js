@@ -10,10 +10,12 @@ let characterGroup;
 let scrollPos = 0;
 let targetScrollPos = 0;
 // Increased total length to fit Certifications
-const totalLength = 350; 
+const totalLength = 400; 
 let mouse = new THREE.Vector2();
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
+
+
 
 // GAME STATE
 let isGameActive = false;
@@ -26,8 +28,8 @@ const zones = [
     { id: 'projects', start: -115, end: -175, title: 'PROJECTS' },
     { id: 'skills', start: -175, end: -225, title: 'SKILLS' },
     { id: 'education', start: -225, end: -265, title: 'EDUCATION' },
-    { id: 'certifications', start: -265, end: -315, title: 'CERTIFICATIONS' },
-    { id: 'contact', start: -315, end: -350, title: 'CONTACT' }
+    { id: 'certifications', start: -265, end: -365, title: 'CERTIFICATIONS' },
+    { id: 'contact', start: -365, end: -400, title: 'CONTACT' }
 ];
 
 // --- MATH & UTILS ---
@@ -219,9 +221,7 @@ function createEnvironment() {
         posAttribute.setY(i, Math.sin(x * 0.2) * 0.5 + Math.cos(z * 0.1) * 0.5);
     }
 
-    // --- COLOR CHANGE HERE ---
-    // Changed from 0x1e1e2e (Dark) to 0x4a5568 (Lighter Cool Grey)
-    const groundMat = createAnimeMaterial(0x34495e); 
+    const groundMat = createAnimeMaterial(0x636e72); 
     
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.position.z = -150; 
@@ -399,16 +399,28 @@ function populateZones() {
     scene.add(mon);
 
     // 7. CERTIFICATIONS (Floating Holo-Panels)
-    for(let i=0; i<3; i++) {
-        const z = -285 - i*8;
+
+    // 7. CERTIFICATIONS (Floating Holo-Panels)
+    for(let i=0; i<9; i++) {
+        // Spread them out over the zone distance
+        const z = -275 - i*10; 
+        
         const panelGeo = new THREE.BoxGeometry(6, 4, 0.2);
         const panelMat = new THREE.MeshBasicMaterial({color: 0x2ecc71, wireframe: true});
         const panel = new THREE.Mesh(panelGeo, panelMat);
+        
+        // Alternate left and right side of the path
         const xSide = (i % 2 === 0 ? 1 : -1) * 8;
+        
         panel.position.set(getPathX(z) + xSide, 4, z);
-        // Tilt towards path
+        // Make the panel face the player on the path
         panel.lookAt(getPathX(z), 4, z);
         scene.add(panel);
+
+        // Add a cool laser beam connecting panel to ground
+        const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 4), new THREE.MeshBasicMaterial({color: 0x2ecc71}));
+        beam.position.set(getPathX(z) + xSide, 2, z);
+        scene.add(beam);
     }
 
     // 8. CONTACT
@@ -550,16 +562,21 @@ function updateUI(z) {
                  html += `<div class="panel-item"><h3>${edu.icon} ${edu.degree}</h3><span class="meta">${edu.institution} | ${edu.period}</span><p>${edu.description}</p></div>`;
              });
         } else if (currentZone.id === 'certifications') {
-             // New separate certification logic
              config.certifications.forEach(cert => {
                  html += `
-                 <div class="cert-card">
-                    <h4>${cert.name}</h4>
-                    <span class="issuer">${cert.issuer}</span>
-                    <span class="date">${cert.date}</span>
-                    <p>${cert.desc}</p>
+                 <div class="cert-card" style="border-left: 3px solid #f1c40f; background: rgba(255,255,255,0.05); padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0;">
+                    <h4 style="margin:0; color:#fff; font-size:1.1rem;">${cert.name}</h4>
+                    <div style="font-size:0.8rem; color:#aaa; margin: 5px 0;">
+                        <span class="issuer">${cert.issuer}</span> | <span class="date">${cert.date}</span>
+                    </div>
+                    <p style="font-size:0.9rem; color:#ccc; margin-bottom:8px;">${cert.desc}</p>
+                    
+                    <a href="${cert.url}" target="_blank" style="display:inline-block; padding: 5px 10px; background:rgba(241, 196, 15, 0.2); color:#f1c40f; text-decoration:none; font-size:0.8rem; border:1px solid #f1c40f; border-radius:4px; transition:0.3s;">
+                        🔗 View Certificate
+                    </a>
                  </div>`;
-             });
+             }); 
+        
         } else if (currentZone.id === 'contact') {
             html += `<p>${config.contact.message}</p><br>`;
             config.contact.links.forEach(link => {
