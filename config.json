@@ -1,8 +1,15 @@
+
 {
     "personal": {
         "name": "Saurav Kumar Mishra",
         "title": "HR Strategy & Talent Acquisition",
         "avatar": "SKM",
+        "intro_text": [
+            "Initializing Batcomputer...",
+            "Identity Verified: Saurav Kumar Mishra",
+            "Mission: HR Strategy & Talent Acquisition",
+            "Status: Ready to Deploy"
+        ],
         "bio": [
             "BBA Student at NERIM Group of Institutions.",
             "Driven by a mission to help organizations build stronger, cohesive teams.",
@@ -57,8 +64,17 @@
             "gradient": "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))"
         }
     ],
-
     "skills": [
+        {
+            "category": "Languages",
+            "items": [
+                {"name": "Hindi (Native)", "level": 100},
+                {"name": "Assamese (Native)", "level": 100},
+                {"name": "Maithili (Professional)", "level": 90},
+                {"name": "English (Professional)", "level": 85},
+                {"name": "Japanese (Elementary)", "level": 40}
+            ]
+        },
         {
             "category": "Core Competencies",
             "items": [
@@ -66,15 +82,6 @@
                 {"name": "Talent Acquisition", "level": 85},
                 {"name": "Change Management", "level": 80},
                 {"name": "Social Media Strategy", "level": 95}
-            ]
-        },
-        {
-            "category": "Tools & Languages",
-            "items": [
-                {"name": "Project Mgmt (Zoho)", "level": 85},
-                {"name": "Data Analysis", "level": 75},
-                {"name": "English/Hindi/Assamese", "level": 100},
-                {"name": "Japanese (Elem)", "level": 40}
             ]
         }
     ],
@@ -95,10 +102,42 @@
         }
     ],
     "certifications": [
-        "Project Management (Siemens)",
-        "Project Management (Reliance Foundation)",
-        "Influencing Skills (HP)",
-        "Python Programming (90 Hrs - Skill India)"
+        {
+            "name": "Effective Leadership",
+            "issuer": "HP LIFE",
+            "date": "Jan 2026",
+            "desc": "Focus on self-awareness, strategic thinking, and ethical leadership."
+        },
+        {
+            "name": "Project Manager Job Simulation",
+            "issuer": "Siemens",
+            "date": "Jan 2026",
+            "desc": "Strategic planning, KPI design, and data integration."
+        },
+        {
+            "name": "HR Job Simulation",
+            "issuer": "GE Aerospace",
+            "date": "Jan 2026",
+            "desc": "Compensation analysis, lean methodology, and feedback management."
+        },
+        {
+            "name": "Project Management with Zoho",
+            "issuer": "Reliance Foundation",
+            "date": "Jan 2026",
+            "desc": "Resource management, risk mitigation, and reporting."
+        },
+        {
+            "name": "Project Associate",
+            "issuer": "Skill India N.S.D.C",
+            "date": "Jan 2026",
+            "desc": "Agile methodologies and remote team management."
+        },
+        {
+            "name": "Internship Certificate",
+            "issuer": "IIT Guwahati",
+            "date": "Jan 2025",
+            "desc": "Financial analysis and research on 3D printing materials."
+        }
     ],
     "contact": {
         "greeting": "Let's Build Great Teams",
