@@ -1,14 +1,13 @@
-
 {
     "personal": {
         "name": "Saurav Kumar Mishra",
         "title": "HR Strategy & Talent Acquisition",
         "avatar": "SKM",
         "intro_text": [
-            "Initializing Batcomputer...",
-            "Identity Verified: Saurav Kumar Mishra",
-            "Mission: HR Strategy & Talent Acquisition",
-            "Status: Ready to Deploy"
+            "Connecting to Batcomputer...",
+            "Accessing Restricted Files: S.K. Mishra",
+            "Decryption Complete.",
+            "Welcome, Guest."
         ],
         "bio": [
             "BBA Student at NERIM Group of Institutions.",
@@ -103,40 +102,67 @@
     ],
     "certifications": [
         {
-            "name": "Effective Leadership",
-            "issuer": "HP LIFE",
-            "date": "Jan 2026",
-            "desc": "Focus on self-awareness, strategic thinking, and ethical leadership."
-        },
-        {
-            "name": "Project Manager Job Simulation",
-            "issuer": "Siemens",
-            "date": "Jan 2026",
-            "desc": "Strategic planning, KPI design, and data integration."
+            "name": "Internship Certificate (Financial Analysis)",
+            "issuer": "IIT Guwahati",
+            "date": "Jan 2025",
+            "desc": "Financial analysis and research on 3D printing materials.",
+            "url": "https://drive.google.com/file/d/1UTzRet7nv_x3OFlpTelLTu8WMYY9pQBM/view"
         },
         {
             "name": "HR Job Simulation",
             "issuer": "GE Aerospace",
             "date": "Jan 2026",
-            "desc": "Compensation analysis, lean methodology, and feedback management."
+            "desc": "Compensation analysis, lean methodology, and feedback management.",
+            "url": "https://drive.google.com/file/d/15d7FPF7o_KKY4csiElzoltokLFAnJ5EF/view"
+        },
+        {
+            "name": "Project Manager Job Simulation",
+            "issuer": "Siemens",
+            "date": "Jan 2026",
+            "desc": "Strategic planning, KPI design, and data integration.",
+            "url": "https://drive.google.com/file/d/1H-dK0LeWYl81ppGkI1Tf2Sm6q6cHRxng/view"
         },
         {
             "name": "Project Management with Zoho",
             "issuer": "Reliance Foundation",
             "date": "Jan 2026",
-            "desc": "Resource management, risk mitigation, and reporting."
+            "desc": "Resource management, risk mitigation, and reporting.",
+            "url": "https://drive.google.com/file/d/1HIIsjRTQ9p4Bcv9unTQKqyP8cL18IDAm/view"
         },
         {
             "name": "Project Associate",
             "issuer": "Skill India N.S.D.C",
             "date": "Jan 2026",
-            "desc": "Agile methodologies and remote team management."
+            "desc": "Agile methodologies and remote team management.",
+            "url": "https://drive.google.com/file/d/10L8Y_0iBQZcsVskhxYIVzdjTs1TOPPxt/view"
         },
         {
-            "name": "Internship Certificate",
-            "issuer": "IIT Guwahati",
-            "date": "Jan 2025",
-            "desc": "Financial analysis and research on 3D printing materials."
+            "name": "Effective Leadership",
+            "issuer": "HP LIFE",
+            "date": "Jan 2026",
+            "desc": "Focus on self-awareness, strategic thinking, and ethical leadership.",
+            "url": "https://www.life-global.org/certificate/e7509059-744a-42a8-9efd-de4709ef624a"
+        },
+        {
+            "name": "Project Associate (Reliance)",
+            "issuer": "Reliance Foundation",
+            "date": "Jan 2026",
+            "desc": "Project management fundamentals.",
+            "url": "https://drive.google.com/file/d/1KgwZZWq43RJ99aQrPZ1d1-oXZTXkWv__/view"
+        },
+        {
+            "name": "Digital Marketing",
+            "issuer": "Skill India",
+            "date": "Jan 2026",
+            "desc": "Digital marketing fundamentals.",
+            "url": "https://drive.google.com/file/d/19i_R_MWCrWtHL8cQbeDaZ4MBGiz0fW-r/view"
+        },
+        {
+            "name": "Digital Marketing",
+            "issuer": "Reliance Foundation",
+            "date": "Jan 2026",
+            "desc": "Digital marketing certification.",
+            "url": "https://drive.google.com/file/d/1M3JCl0G_b_s04u1KEB9NBrYyKZFD5FPR/view"
         }
     ],
     "contact": {
