@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Saurav Kumar Mishra | 3D Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <script type="importmap">
@@ -17,10 +18,17 @@
 <body>
     <div id="loader">
         <div class="spinner"></div>
-        <div class="loading-text">Loading 3D World...</div>
+        <div class="loading-text">Loading Batcomputer...</div>
     </div>
 
-    <div id="ui-layer">
+    <div id="intro-overlay">
+        <div class="intro-content">
+            <div id="terminal-text"></div>
+            <button id="start-btn" class="hidden">INITIALIZE MISSION</button>
+        </div>
+    </div>
+
+    <div id="ui-layer" class="hidden">
         <div id="header">
             <h1 id="ui-name">Saurav Kumar Mishra</h1>
             <p id="ui-role">HR Strategy & Talent Acquisition</p>
@@ -30,7 +38,7 @@
             <div class="mouse">
                 <div class="wheel"></div>
             </div>
-            <p>SCROLL TO EXPLORE</p>
+            <p>SCROLL / DRAG TO EXPLORE</p>
         </div>
 
         <div id="zone-indicator">ZONE: INTRO</div>
