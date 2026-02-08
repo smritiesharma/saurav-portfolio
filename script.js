@@ -6,14 +6,19 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 // --- CONFIGURATION & STATE ---
 let config = {};
 let scene, camera, renderer, composer;
-let character, mixer, characterGroup;
+let characterGroup;
 let scrollPos = 0;
 let targetScrollPos = 0;
-const totalLength = 300;
+// Increased total length to fit Certifications
+const totalLength = 350; 
 let mouse = new THREE.Vector2();
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 
+// GAME STATE
+let isGameActive = false;
+
+// Updated Zones with separate Certifications area
 const zones = [
     { id: 'intro', start: 0, end: -25, title: 'INTRO' },
     { id: 'about', start: -25, end: -65, title: 'ABOUT ME' },
@@ -21,7 +26,8 @@ const zones = [
     { id: 'projects', start: -115, end: -175, title: 'PROJECTS' },
     { id: 'skills', start: -175, end: -225, title: 'SKILLS' },
     { id: 'education', start: -225, end: -265, title: 'EDUCATION' },
-    { id: 'contact', start: -265, end: -300, title: 'CONTACT' }
+    { id: 'certifications', start: -265, end: -315, title: 'CERTIFICATIONS' },
+    { id: 'contact', start: -315, end: -350, title: 'CONTACT' }
 ];
 
 // --- MATH & UTILS ---
@@ -42,7 +48,7 @@ function createAnimeMaterial(color) {
     });
 }
 
-// Outline Generator (Inverted Hull)
+// Outline Generator
 function addOutline(mesh, thickness = 0.02, color = 0x000000) {
     const outlineMaterial = new THREE.MeshBasicMaterial({
         color: color,
@@ -56,7 +62,6 @@ function addOutline(mesh, thickness = 0.02, color = 0x000000) {
 
 // --- INITIALIZATION ---
 async function init() {
-    // Load Config
     try {
         const response = await fetch('config.json');
         config = await response.json();
@@ -70,7 +75,8 @@ async function init() {
     scene.fog = new THREE.FogExp2(0x1a1a2e, 0.008);
 
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 6, 15);
+    // Initial Camera Position (Cinematic Angle for Intro)
+    camera.position.set(0, 4, 10);
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -87,11 +93,11 @@ async function init() {
 
     // 3. World Generation
     createEnvironment();
-    createCharacter(); // Calls the Batman version
+    createCharacter();
     populateZones();
     createParticles();
 
-    // 4. Post Processing (Bloom)
+    // 4. Post Processing
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
     bloomPass.threshold = 0.2;
@@ -105,7 +111,7 @@ async function init() {
     // 5. Events
     window.addEventListener('resize', onWindowResize);
     window.addEventListener('wheel', onScroll);
-    window.addEventListener('touchmove', onTouchMove); 
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
     document.addEventListener('mousemove', onMouseMove);
 
     // Init UI
@@ -113,13 +119,66 @@ async function init() {
     document.getElementById('loader').style.opacity = 0;
     setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
 
+    // START THE INTRO SEQUENCE
+    playIntro();
+
     animate();
 }
+
+// --- INTRO SEQUENCE ---
+function playIntro() {
+    const textContainer = document.getElementById('terminal-text');
+    const startBtn = document.getElementById('start-btn');
+    const lines = config.personal.intro_text || ["System Initializing...", "Welcome."];
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    function typeLine() {
+        if (lineIndex < lines.length) {
+            if (charIndex < lines[lineIndex].length) {
+                // If starting a new line, add a div
+                if (charIndex === 0) {
+                    textContainer.innerHTML += `<div></div>`;
+                }
+                // Append char to last div
+                textContainer.lastElementChild.innerHTML += lines[lineIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeLine, 30);
+            } else {
+                lineIndex++;
+                charIndex = 0;
+                setTimeout(typeLine, 300);
+            }
+        } else {
+            // Typing done, show button
+            startBtn.classList.remove('hidden');
+            startBtn.classList.add('visible');
+        }
+    }
+
+    typeLine();
+
+    startBtn.addEventListener('click', () => {
+        // Hide Overlay
+        document.getElementById('intro-overlay').style.display = 'none';
+        
+        // Show Main UI
+        document.getElementById('ui-layer').classList.remove('hidden');
+        
+        // Enable Game
+        isGameActive = true;
+        
+        // Reset Camera to Gameplay position smoothly in animate loop logic
+        // But for instant feel:
+        camera.position.set(0, 6, 15);
+    });
+}
+
 
 // --- WORLD CREATION ---
 
 function createEnvironment() {
-    // Sky gradient
+    // Sky
     const vertexShader = `
         varying vec3 vWorldPosition;
         void main() {
@@ -148,50 +207,45 @@ function createEnvironment() {
     const sky = new THREE.Mesh(skyGeo, skyMat);
     scene.add(sky);
 
-    // Deformed Ground Plane
-    const groundGeo = new THREE.PlaneGeometry(60, 400, 50, 400);
+    // Ground
+    const groundGeo = new THREE.PlaneGeometry(60, 450, 50, 450); 
     groundGeo.rotateX(-Math.PI / 2);
     const posAttribute = groundGeo.attributes.position;
     for (let i = 0; i < posAttribute.count; i++) {
         const x = posAttribute.getX(i);
         const z = posAttribute.getZ(i);
-        // Shift x based on path
         const pathX = getPathX(z);
         posAttribute.setX(i, x + pathX);
-        
-        // Add minimal noise
         posAttribute.setY(i, Math.sin(x * 0.2) * 0.5 + Math.cos(z * 0.1) * 0.5);
     }
-    const groundMat = createAnimeMaterial(0x1e1e2e);
+
+    // --- COLOR CHANGE HERE ---
+    // Changed from 0x1e1e2e (Dark) to 0x4a5568 (Lighter Cool Grey)
+    const groundMat = createAnimeMaterial(0x34495e); 
+    
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.position.z = -150; 
     addOutline(ground, 0.005, 0x5555ff); 
     scene.add(ground);
 }
 
-// *** BATMAN CHARACTER FUNCTION ***
+// *** BATMAN CHARACTER ***
 function createCharacter() {
     characterGroup = new THREE.Group();
-    
-    // Scale 1.5x
     const s = 1.5;
     
-    // --- BATMAN MATERIALS ---
-    const grayMat = createAnimeMaterial(0x34495e);  // Dark Blue-Grey Suit
-    const blackMat = createAnimeMaterial(0x111111); // Cowl, Boots, Gloves, Cape
-    const skinMat = createAnimeMaterial(0xffdcb6);  // Chin
-    const yellowMat = createAnimeMaterial(0xf1c40f); // Utility Belt & Logo
+    const grayMat = createAnimeMaterial(0x34495e);  
+    const blackMat = createAnimeMaterial(0x111111); 
+    const skinMat = createAnimeMaterial(0xffdcb6);  
+    const yellowMat = createAnimeMaterial(0xf1c40f); 
 
-    // --- HEAD & COWL ---
+    // Head
     const headGroup = new THREE.Group();
-    
-    // Main Head (Cowl)
     const headGeo = new THREE.BoxGeometry(0.5*s, 0.4*s, 0.5*s);
     const head = new THREE.Mesh(headGeo, blackMat);
     addOutline(head);
     headGroup.add(head);
 
-    // Bat Ears
     const earGeo = new THREE.ConeGeometry(0.08*s, 0.2*s, 4);
     const earL = new THREE.Mesh(earGeo, blackMat);
     earL.position.set(-0.15*s, 0.25*s, 0);
@@ -204,62 +258,51 @@ function createCharacter() {
     addOutline(earR);
     headGroup.add(earL, earR);
 
-    // Chin
     const chinGeo = new THREE.BoxGeometry(0.3*s, 0.15*s, 0.05*s);
     const chin = new THREE.Mesh(chinGeo, skinMat);
     chin.position.set(0, -0.12*s, 0.23*s); 
     headGroup.add(chin);
-
     headGroup.position.y = 1.6 * s;
     characterGroup.add(headGroup);
 
-    // --- BODY ---
+    // Body
     const bodyGroup = new THREE.Group();
-
-    // Torso
     const torsoGeo = new THREE.BoxGeometry(0.6*s, 0.8*s, 0.4*s);
     const torso = new THREE.Mesh(torsoGeo, grayMat);
     addOutline(torso);
     bodyGroup.add(torso);
 
-    // Bat Logo
     const logoGeo = new THREE.BoxGeometry(0.3*s, 0.15*s, 0.05*s);
     const logo = new THREE.Mesh(logoGeo, yellowMat);
     logo.position.set(0, 0.15*s, 0.2*s); 
     bodyGroup.add(logo);
 
-    // Utility Belt
     const beltGeo = new THREE.BoxGeometry(0.62*s, 0.1*s, 0.42*s);
     const belt = new THREE.Mesh(beltGeo, yellowMat);
     belt.position.y = -0.35 * s; 
     addOutline(belt);
     bodyGroup.add(belt);
 
-    // Cape
     const capeGeo = new THREE.BoxGeometry(0.7*s, 1.2*s, 0.1*s);
     const cape = new THREE.Mesh(capeGeo, blackMat);
     cape.position.set(0, -0.2*s, -0.25*s); 
     cape.rotation.x = 0.1; 
     addOutline(cape);
     bodyGroup.add(cape);
-
     bodyGroup.position.y = 0.9 * s;
     characterGroup.add(bodyGroup);
 
-    // --- LIMBS ---
+    // Limbs
     characterGroup.userData.limbs = [];
     
     const createLimb = (w, h, d, mainMat, accentMat, x, y, z) => {
         const group = new THREE.Group();
-        
-        // Upper
         const upperGeo = new THREE.BoxGeometry(w*s, h/2*s, d*s);
         const upper = new THREE.Mesh(upperGeo, mainMat);
         upper.position.y = -h/4*s;
         addOutline(upper);
         group.add(upper);
 
-        // Lower
         const lowerGeo = new THREE.BoxGeometry(w*s, h/2*s, d*s);
         const lower = new THREE.Mesh(lowerGeo, accentMat);
         lower.position.y = -h*0.75*s;
@@ -355,11 +398,24 @@ function populateZones() {
     addOutline(mon, 0.03, 0xB8860B);
     scene.add(mon);
 
-    // 7. CONTACT
+    // 7. CERTIFICATIONS (Floating Holo-Panels)
+    for(let i=0; i<3; i++) {
+        const z = -285 - i*8;
+        const panelGeo = new THREE.BoxGeometry(6, 4, 0.2);
+        const panelMat = new THREE.MeshBasicMaterial({color: 0x2ecc71, wireframe: true});
+        const panel = new THREE.Mesh(panelGeo, panelMat);
+        const xSide = (i % 2 === 0 ? 1 : -1) * 8;
+        panel.position.set(getPathX(z) + xSide, 4, z);
+        // Tilt towards path
+        panel.lookAt(getPathX(z), 4, z);
+        scene.add(panel);
+    }
+
+    // 8. CONTACT
     const portalGeo = new THREE.CircleGeometry(8, 32);
     const portalMat = new THREE.MeshBasicMaterial({ color: 0x0984e3 });
     const portal = new THREE.Mesh(portalGeo, portalMat);
-    portal.position.set(getPathX(-290), 8, -290);
+    portal.position.set(getPathX(-340), 8, -340);
     scene.add(portal);
 }
 
@@ -381,12 +437,17 @@ function createParticles() {
 // --- INTERACTION ---
 
 function onScroll(event) {
+    if(!isGameActive) return; // Block scroll before start
     targetScrollPos += event.deltaY * 0.05;
     targetScrollPos = Math.max(0, Math.min(targetScrollPos, totalLength));
 }
 
 let touchStartY = 0;
 function onTouchMove(e) {
+    if(!isGameActive) {
+        e.preventDefault(); // Prevent default scroll before start
+        return; 
+    }
     const y = e.touches[0].clientY;
     const diff = touchStartY - y;
     targetScrollPos += diff * 0.1;
@@ -421,6 +482,8 @@ function initUI() {
 }
 
 function updateUI(z) {
+    if(!isGameActive) return;
+
     // 1. Progress Bar
     const pct = Math.abs(z) / totalLength;
     document.getElementById('progress-bar').style.setProperty('--prog', `${pct * 100}%`);
@@ -462,7 +525,6 @@ function updateUI(z) {
             });
         } else if (currentZone.id === 'projects') {
             config.projects.forEach(proj => {
-                // *** UPDATED: Now uses IMG tags instead of Emojis ***
                 html += `
                 <div class="project-card" style="background:${proj.gradient}">
                     <img src="${proj.image}" class="project-img" alt="${proj.name}">
@@ -487,9 +549,17 @@ function updateUI(z) {
              config.education.forEach(edu => {
                  html += `<div class="panel-item"><h3>${edu.icon} ${edu.degree}</h3><span class="meta">${edu.institution} | ${edu.period}</span><p>${edu.description}</p></div>`;
              });
-             html += `<h3>Certifications</h3><ul>`;
-             config.certifications.forEach(cert => html += `<li style="margin-left:20px; color:#ddd; margin-bottom:5px;">${cert}</li>`);
-             html += `</ul>`;
+        } else if (currentZone.id === 'certifications') {
+             // New separate certification logic
+             config.certifications.forEach(cert => {
+                 html += `
+                 <div class="cert-card">
+                    <h4>${cert.name}</h4>
+                    <span class="issuer">${cert.issuer}</span>
+                    <span class="date">${cert.date}</span>
+                    <p>${cert.desc}</p>
+                 </div>`;
+             });
         } else if (currentZone.id === 'contact') {
             html += `<p>${config.contact.message}</p><br>`;
             config.contact.links.forEach(link => {
@@ -517,6 +587,7 @@ function animate() {
     const charX = getPathX(z);
     
     if (scrollPos < 10) {
+        // Initial Drop Animation
         characterGroup.position.y = THREE.MathUtils.lerp(characterGroup.position.y, 0, 0.05);
         characterGroup.rotation.y += 0.1; 
     } else {
