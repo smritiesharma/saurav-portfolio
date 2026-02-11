@@ -4,14 +4,21 @@
         "title": "HR Strategy & Talent Acquisition",
         "avatar": "SKM",
         "intro_text": [
-            "ESTABLISHING SECURE CONNECTION...",
-            "RETRIEVING PROFILE: S. K. MISHRA", 
-            "FIELD: HUMAN RESOURCE MANAGEMENT SYSTEM"
+            "FETCHING DATA...",
+            "Saurav Kumar Mishra", 
+            "NERIM Group of Institutions",
+            "Bachelor of Business Administration (BBA)",
+            "Human Resource Management"
         ],
         "bio": [
-            "BBA Student at NERIM Group of Institutions.",
-            "Driven by a mission to help organizations build stronger, cohesive teams.",
-            "Digital-first perspective with a background in content creation."
+            "BBA student and aspiring HR Professional with a unique blend of administrative discipline, creative strategy, and leadership experience.",
+            "Proven track record in talent engagement (400K+ reach as a content creator) and operational efficiency (IIT Guwahati internship & GE Aerospace simulation).",
+            "Certified in Project Management and skilled in bridging the gap between organizational goals and human connection",
+            "Core Expertise:",
+            "HR & Team Management: Leadership roles (Class Rep/Event Head) & HR tool application.",
+            "Digital Strategy: Expertise in employer branding and high-impact visual storytelling.",
+            "Analytical Rigor: Data documentation, financial reporting, and workflow optimization."
+            
         ],
         "stats": [
             {"label": "Views", "value": "450K+"},
@@ -175,6 +182,7 @@
         ]
     }
 }
+
 
 
 
