@@ -64,6 +64,17 @@
     ],
     "skills": [
         {
+            
+            "category": "Core Competencies",
+            "items": [
+                {"name": "Team Management", "level": 90},
+                {"name": "Talent Acquisition", "level": 85},
+                {"name": "Change Management", "level": 80},
+                {"name": "Social Media Strategy", "level": 95}
+            ]
+            
+        },
+        {
             "category": "Languages",
             "items": [
                 {"name": "Hindi (Native)", "level": 100},
@@ -71,15 +82,6 @@
                 {"name": "Maithili (Professional)", "level": 90},
                 {"name": "English (Professional)", "level": 85},
                 {"name": "Japanese (Elementary)", "level": 40}
-            ]
-        },
-        {
-            "category": "Core Competencies",
-            "items": [
-                {"name": "Team Management", "level": 90},
-                {"name": "Talent Acquisition", "level": 85},
-                {"name": "Change Management", "level": 80},
-                {"name": "Social Media Strategy", "level": 95}
             ]
         }
     ],
@@ -173,6 +175,7 @@
         ]
     }
 }
+
 
 
 
