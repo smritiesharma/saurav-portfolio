@@ -1,48 +1,65 @@
+/* Import fonts from Google Fonts */
+/* Outfit for body text, Space Grotesk for headers/tech vibe */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&family=Space+Grotesk:wght@400;700&display=swap');
 
+/* =========================================
+   VARIABLES (THEME CONFIGURATION)
+   ========================================= */
 :root {
-    --accent: #ff7675; /* Keeping the coral accent, or switch to yellow for Batman vibe */
-    --bat-yellow: #f1c40f;
-    --secondary: #74b9ff;
-    --dark: #2d3436;
-    --glass: rgba(15, 12, 41, 0.85);
-    --border: rgba(255, 255, 255, 0.1);
+    --accent: #ff7675; /* Primary accent color (Coral) */
+    --bat-yellow: #f1c40f; /* Secondary accent (Batman Yellow) used for highlights */
+    --secondary: #74b9ff; /* Blue for subheaders or tech elements */
+    --dark: #2d3436; /* Dark grey for backgrounds */
+    --glass: rgba(15, 12, 41, 0.85); /* Semi-transparent background for panels */
+    --border: rgba(255, 255, 255, 0.1); /* Subtle border color */
 }
 
+/* Reset default browser spacing */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* =========================================
+   GLOBAL BODY STYLES
+   ========================================= */
 body {
-    overflow: hidden;
+    overflow: hidden; /* Prevent native scrollbars (scrolling handled by JS/Canvas) */
     background: #000;
     font-family: 'Outfit', sans-serif;
     color: white;
 }
 
+/* =========================================
+   LAYERS & CONTAINERS
+   ========================================= */
+
+/* The 3D World Container */
 #canvas-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 1;
+    z-index: 1; /* Lowest visual layer */
 }
 
+/* The 2D UI Overlay Layer */
 #ui-layer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 10;
-    pointer-events: none;
-    transition: opacity 1s;
+    z-index: 10; /* Sits above the 3D canvas */
+    pointer-events: none; /* Allows clicks to pass through to the 3D world */
+    transition: opacity 1s; /* Fade effect when revealing */
 }
 
 #ui-layer.hidden {
-    opacity: 0;
+    opacity: 0; /* Hide UI initially or during transitions */
 }
 
-/* --- INTRO OVERLAY --- */
+/* =========================================
+   INTRO OVERLAY (LANDING PAGE)
+   ========================================= */
 #intro-overlay {
     position: fixed;
     top: 0;
@@ -50,7 +67,7 @@ body {
     width: 100vw;
     height: 100vh;
     background: black;
-    z-index: 20;
+    z-index: 20; /* Highest layer, covers everything */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,18 +75,20 @@ body {
     font-family: 'Space Grotesk', monospace;
 }
 
+/* The typing text area */
 #terminal-text {
     font-size: 1.5rem;
     color: var(--bat-yellow);
     margin-bottom: 30px;
-    min-height: 120px;
-    white-space: pre-wrap;
-    text-shadow: 0 0 5px var(--bat-yellow);
+    min-height: 120px; /* Reserves space so layout doesn't jump while typing */
+    white-space: pre-wrap; /* Preserves line breaks from JSON */
+    text-shadow: 0 0 5px var(--bat-yellow); /* Glowing text effect */
     text-align: left;
     width: 80%;
     max-width: 600px;
 }
 
+/* The "Enter Experience" button */
 #start-btn {
     padding: 15px 40px;
     font-size: 1.2rem;
@@ -81,25 +100,27 @@ body {
     text-transform: uppercase;
     letter-spacing: 3px;
     transition: 0.3s;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 0; /* Hidden initially */
+    transform: translateY(20px); /* Pushed down for animation */
 }
 
 #start-btn.visible {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; /* Fade in */
+    transform: translateY(0); /* Slide up */
 }
 
 #start-btn:hover {
     background: var(--bat-yellow);
     color: black;
-    box-shadow: 0 0 20px var(--bat-yellow);
+    box-shadow: 0 0 20px var(--bat-yellow); /* Glow on hover */
 }
 
-/* --- LOADER --- */
+/* =========================================
+   LOADER ANIMATION
+   ========================================= */
 #loader {
     position: fixed;
-    z-index: 999;
+    z-index: 999; /* Absolute top priority */
     background: #000;
     width: 100vw;
     height: 100vh;
@@ -115,14 +136,16 @@ body {
     height: 50px;
     border: 3px solid rgba(255,255,255,0.1);
     border-radius: 50%;
-    border-top-color: var(--bat-yellow);
+    border-top-color: var(--bat-yellow); /* Rotating part color */
     animation: spin 1s ease-in-out infinite;
     margin-bottom: 20px;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* --- HUD ELEMENTS --- */
+/* =========================================
+   HUD ELEMENTS (HEADS-UP DISPLAY)
+   ========================================= */
 #header {
     position: absolute;
     top: 40px;
@@ -142,6 +165,7 @@ body {
     font-weight: 300;
 }
 
+/* Scroll Hint Animation */
 #scroll-hint {
     position: absolute;
     bottom: 40px;
@@ -149,7 +173,7 @@ body {
     transform: translateX(-50%);
     text-align: center;
     opacity: 0.8;
-    animation: bounce 2s infinite;
+    animation: bounce 2s infinite; /* Vertical bounce */
 }
 
 .mouse {
@@ -166,12 +190,13 @@ body {
     background: white;
     border-radius: 2px;
     margin: 6px auto;
-    animation: scroll 1.5s infinite;
+    animation: scroll 1.5s infinite; /* Wheel scrolling down animation */
 }
 
 @keyframes scroll { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(15px); } }
 @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }
 
+/* Zone Indicator (Top Right) */
 #zone-indicator {
     position: absolute;
     top: 40px;
@@ -184,7 +209,9 @@ body {
     background: rgba(0,0,0,0.5);
 }
 
-/* --- PROGRESS --- */
+/* =========================================
+   PROGRESS BAR (RIGHT SIDE)
+   ========================================= */
 #progress-container {
     position: absolute;
     right: 40px;
@@ -192,7 +219,7 @@ body {
     transform: translateY(-50%);
     height: 200px;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row-reverse; /* Align bar to the right of dots */
     align-items: center;
     gap: 10px;
 }
@@ -204,13 +231,14 @@ body {
     position: relative;
 }
 
+/* The actual fill of the progress bar */
 .progress-bar::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: var(--prog, 0%);
+    height: var(--prog, 0%); /* Height controlled by JS variable */
     background: var(--bat-yellow);
     transition: height 0.1s;
 }
@@ -235,30 +263,33 @@ body {
     box-shadow: 0 0 10px var(--bat-yellow);
 }
 
-/* --- CONTENT PANEL --- */
+/* =========================================
+   CONTENT PANEL (SIDEBAR/MODAL)
+   ========================================= */
 .panel {
     position: absolute;
-    right: 100px;
+    right: 100px; /* Positioned to the left of the progress bar */
     top: 50%;
     transform: translateY(-50%);
     width: 400px;
     max-height: 75vh;
     background: var(--glass);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* Frosted glass effect */
     border: 1px solid var(--border);
-    border-left: 4px solid var(--bat-yellow);
+    border-left: 4px solid var(--bat-yellow); /* Accent border */
     padding: 30px;
     border-radius: 8px;
     color: white;
-    overflow-y: auto;
+    overflow-y: auto; /* Allow scrolling within the panel */
     transition: all 0.5s ease;
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: auto; /* Re-enable clicks inside the panel */
 }
 
+/* Hidden state for panel */
 .panel.hidden {
     opacity: 0;
-    transform: translate(50px, -50%);
+    transform: translate(50px, -50%); /* Slide out to the right */
     pointer-events: none;
 }
 
@@ -271,6 +302,7 @@ body {
     padding-bottom: 10px;
 }
 
+/* Standard List Items (Job, Education) */
 .panel-item {
     margin-bottom: 20px;
 }
@@ -279,6 +311,7 @@ body {
 .panel-item .meta { font-size: 0.8rem; color: var(--bat-yellow); margin-bottom: 8px; display: block; }
 .panel-item p { font-size: 0.9rem; line-height: 1.5; color: #ccc; }
 
+/* Skill Pills */
 .skill-tag {
     display: inline-block;
     background: rgba(255,255,255,0.1);
@@ -292,7 +325,8 @@ body {
 
 /* Project Cards */
 .project-card {
-    background: rgba(0, 0, 0, 0.4) !important;
+    /* REMOVED !important so inline JS styles from config work */
+    background: rgba(0, 0, 0, 0.4); 
     backdrop-filter: blur(10px);
     padding: 0;
     border-radius: 12px;
@@ -303,7 +337,7 @@ body {
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px); /* Lift effect on hover */
     border-color: var(--bat-yellow);
 }
 
@@ -318,7 +352,17 @@ body {
     padding: 15px;
 }
 
-/* Cert Cards */
+.project-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: 4px;
+    color: #fff;
+}
+
+/* Certification Cards */
 .cert-card {
     background: rgba(255,255,255,0.05);
     border-left: 2px solid var(--bat-yellow);
@@ -331,7 +375,7 @@ body {
 .cert-card .date { float: right; color: var(--bat-yellow); font-size: 0.8rem; }
 .cert-card p { font-size: 0.85rem; color: #ccc; margin-top: 5px; }
 
-
+/* Contact Links */
 .contact-link {
     display: flex;
     align-items: center;
@@ -348,26 +392,30 @@ body {
 .contact-link:hover { background: var(--bat-yellow); color: #000; }
 .contact-icon { font-size: 1.5rem; }
 
-/* --- MOBILE RESPONSIVENESS --- */
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
 @media (max-width: 768px) {
     #ui-layer { pointer-events: none; }
     
     #header {
-        top: 20px;
+        top: 15px;
         left: 20px;
     }
     
-    #ui-name { font-size: 1.5rem; }
-    #ui-role { font-size: 0.9rem; }
+    #ui-name { font-size: 1.2rem; }
+    #ui-role { font-size: 0.8rem; }
     
     #zone-indicator {
-        top: 20px;
-        right: 20px;
-        font-size: 0.8rem;
+        top: 15px;
+        right: 15px;
+        font-size: 0.7rem;
+        padding: 4px 10px;
     }
     
-    #progress-container { display: none; } /* Hide progress bar on mobile */
+    #progress-container { display: none; /* Hide progress bar on mobile */ }
     
+    /* FIX: Panel is moved to bottom sheet on mobile */
     .panel {
         width: 100%;
         left: 0;
@@ -375,18 +423,19 @@ body {
         top: auto;
         transform: translateY(0);
         border-radius: 20px 20px 0 0;
-        max-height: 50vh;
+        max-height: 40vh; /* Reduced height to leave room for 3D view */
         border-left: none;
         border-top: 4px solid var(--bat-yellow);
         padding: 20px;
+        background: rgba(15, 12, 41, 0.95); /* darker/more opaque for readability */
     }
     
     .panel.hidden {
-        transform: translateY(100%);
+        transform: translateY(100%); /* Slide down off screen */
         opacity: 1;
     }
     
-    #terminal-text { font-size: 1.1rem; width: 90%; }
+    #terminal-text { font-size: 1rem; width: 85%; }
     
-    #scroll-hint { bottom: 55vh; } /* Move hint up so panel doesn't cover it */
+    #scroll-hint { bottom: 45vh; } /* Moved up to not overlap with bottom panel */
 }
