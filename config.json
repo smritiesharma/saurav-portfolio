@@ -29,7 +29,7 @@
             "description": "Managed end-to-end content. Achieved 50% higher reach and boosted engagement through strategic visual storytelling."
         },
         {
-            "title": "Project Intern",
+            "title": "Project Intern (CIKS)",
             "company": "IIT Guwahati",
             "period": "Jan 2025",
             "description": "Streamlined data documentation and prepared financial reports on Journal/Ledger accounts for CIKS Department."
@@ -105,7 +105,7 @@
     ],
     "certifications": [
         {
-            "name": "Internship Certificate (Financial Analysis)",
+            "name": "Project Intern",
             "issuer": "IIT Guwahati",
             "date": "Jan 2025",
             "desc": "Financial analysis and research on 3D printing materials.",
@@ -177,6 +177,7 @@
         ]
     }
 }
+
 
 
 
