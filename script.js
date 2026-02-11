@@ -169,7 +169,7 @@ function createEnvironment() {
         posAttribute.setX(i, x + pathX);
         posAttribute.setY(i, Math.sin(x * 0.2) * 0.5 + Math.cos(z * 0.1) * 0.5);
     }
-    const groundMat = createAnimeMaterial(0x34495e); 
+    const groundMat = createAnimeMaterial(0x636e72); 
     groundMesh = new THREE.Mesh(groundGeo, groundMat); 
     groundMesh.position.z = -500; 
     addOutline(groundMesh, 0.005, 0x5555ff); 
@@ -521,3 +521,4 @@ function animate() {
 }
 
 init();
+
